@@ -9,6 +9,7 @@ var fs = require('fs'),
     passport = require('passport'),
     errorhandler = require('errorhandler'),
     mongoose = require('mongoose');
+require('./models/User'); 
 
 var isProduction = process.env.NODE_ENV === 'production';
 
