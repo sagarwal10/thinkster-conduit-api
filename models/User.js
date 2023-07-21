@@ -47,7 +47,7 @@ UserSchema.methods.toAuthJSON = function() {
     email: this.email,
     token: this.generateJWT(),
     bio: this.bio,
-    image: this,iaage
+    image: this.image
   });
 }; 
 
