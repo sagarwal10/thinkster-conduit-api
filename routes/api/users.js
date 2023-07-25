@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var router = require('express').Router();
 var passport = require('passport');
-var user = mongoose.model('User');
+var User = mongoose.model('User');
 var auth = require('../auth');
 
 router.post('/users', function(req, res, next) {
@@ -14,7 +14,7 @@ router.post('/users', function(req, res, next) {
   user.save().then(function() {
     return res.json({user: user.toAuthJSON()});
   }).catch(next);
-} 
+}) 
 
 router.post('/users/login', function(req, res, next) {
   if (!req.body.user.email) {
@@ -42,7 +42,7 @@ router.get('/user', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user) {
     if (!user) {return res.sendStatus(401); }
 
-    return res.json({user: user.toAuthJSON()})'
+    return res.json({user: user.toAuthJSON()});
   }).catch(next);
 }); 
 
