@@ -11,7 +11,7 @@ var fs = require('fs'),
     mongoose = require('mongoose');
 require('./models/User'); 
 require('./config/passport'); 
-
+require('./models/Article'); 
 var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
