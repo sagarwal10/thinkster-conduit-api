@@ -25,7 +25,7 @@ router.get('/:username', auth.optional, function(req, res, next) {
   } else {
       return res.json({profile: req.profile.toProfileJSONFor(false)});
   }
-}; 
+}); 
 
 router.post('/:username/follow', auth.required, function(req, res, next) {
   var profileId = req.profile._id; 

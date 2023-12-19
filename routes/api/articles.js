@@ -36,7 +36,7 @@ router.param('article', function(req, res, next, slug) {
 router.get('/:article', auth.optional, function(req, res, next) {
   Promise.all([
     req.payload ? User.findById(req.payload.id) : null,
-    req.article.populate('author').execPopulate();
+    req.article.populate('author').execPopulate()
   ]).then(function(results) {
     var user = results[0];
     return res.json({article: req.article.toJSONFor(user)});
@@ -68,7 +68,7 @@ router.put('/:article', auth.required, function(req, res, next) {
 }); 
 
 router.delete('/:article', auth.required, function(req, res, next) {
-  User.findById(req.payload.id).then(funcrion() {
+  User.findById(req.payload.id).then(function() {
     if (req.article.author._id.toString() === req.payload.id.toString()) {
       return req.article.remove().then(function() {
         return res.sendStatus(204);
@@ -76,7 +76,7 @@ router.delete('/:article', auth.required, function(req, res, next) {
     } else {
       return res.sendStatus(403);
     }
-  }
+  });
 });
 
 // Favorite an article
@@ -149,7 +149,7 @@ router.get('/:article/comments', auth.optional, function(req, res, next) {
 
 router.param('comment', function(req, res, next, id) {
   Comment.findById(id).then(function(comment) {
-    if (!comment) { retirn res.sendStatus(404); }
+    if (!comment) { return res.sendStatus(404); }
     req.comment = comment;
     return next();
   }).catch(next);
@@ -188,7 +188,7 @@ router.get('/', auth.optional, function(req, res, next) {
   Promise.all([
     req.query.author ? User.findOne({ username: res.query.author }) : null,
     req.query.favorited ? User.findOne({ username: req.query.favorited }) : null
-  }).then(function(results) {
+  ]).then(function(results) {
     var authpr = results[0];
     var favoriter = results[1];
    
@@ -239,7 +239,7 @@ router.get('/feed', auth.required, function(req, res, next) {
   }
 
   User.findById(req.payload.id).then(function(user) {
-    if (!user) { requrn res.sendStatus(401); }
+    if (!user) { return res.sendStatus(401); }
    
     Promise.all([
       Article.find({ author: {$in: user.following} })
